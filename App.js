@@ -1,20 +1,38 @@
 import React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Platform, Text } from 'react-native';
+import { 
+  StyleSheet, 
+  ImageBackground,
+  KeyboardAvoidingView, 
+  Platform, 
+  Text,
+  View 
+} from 'react-native';
 
+import getImageForWeather from './utils/getImageForWeather';
 import { SearchInput } from './components/SearchInput';
 
 export default class App extends React.Component {
 
   render() {
+    const location = 'Bardcelona';
+
     return (
       <KeyboardAvoidingView 
         style={styles.container}
         behavior="padding"
         >
-         <Text style={[styles.blue, styles.largeText]}> Barcelona </Text>
-         <Text style={styles.smallText}>Rain here</Text>
-         <Text style={styles.smallText}>26 degrees</Text>
-         <SearchInput placeholder="Search city" />
+        <ImageBackground
+          source={getImageForWeather('Snow')}
+          style={styles.imageContainer}
+          imageStyle={styles.image}
+        >
+        <View style={styles.innerContainer}> 
+          <Text style={[styles.textStyle, styles.largeText]}> {location} </Text>
+          <Text style={[styles.textStyle, styles.smallText]}>Rain here</Text>
+          <Text style={[styles.textStyle, styles.smallText]}>26 degrees</Text>
+          <SearchInput placeholder="Search city" />
+         </View>
+         </ImageBackground>
       </KeyboardAvoidingView>
     )
   }
@@ -23,15 +41,26 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: 'red',
   },
-  blue: {
-    color: 'blue',
+  image:{
+    flex: 1,
+    height: null,
+    width: null,
+    resizeMode: 'cover',
+  },
+  imageContainer: {
+    flex: 1,
+  },
+  innerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0.05)',
   },
   textStyle: {
     textAlign: 'center',
+    fontFamily: Platform.OS === 'ios' ? 'AvenirNext-Regular' : 'Roboto',
+    color: 'white',
   },
   largeText: {
     fontSize: 44,
