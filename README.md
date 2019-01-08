@@ -1,5 +1,5 @@
 # React-Native-Weather-App
 
-An app built using React Native.
-It displays weather is a selected location.
+React Native app
+It displays weather in a selected location using [MetaWeather API](https://www.metaweather.com/)
 
