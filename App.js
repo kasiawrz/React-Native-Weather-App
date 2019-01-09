@@ -5,9 +5,12 @@ import {
   KeyboardAvoidingView, 
   Platform, 
   Text,
-  View 
+  View,
+  ActivityIndicator,
+  StatusBar, 
 } from 'react-native';
 
+import { fetchLocationId, fetchWeather } from './utils/api';
 import getImageForWeather from './utils/getImageForWeather';
 import { SearchInput } from './components/SearchInput';
 
@@ -15,19 +18,42 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: 'San Frjan'
+      location: 'San Fran',
+      loading: false,
+      error: false,
+      temperature: 0,
+      weather: '',
     }
   }
 
   componentDidMount() {
-    console.log('Component has mounted!');
     this.handleUpdateLocation(this.state.location);
   }
 
-  handleUpdateLocation = city => {
-    this.setState({
-      location: city,
-    })
+  handleUpdateLocation = async city => {
+    if (!city) return
+
+    this.setState({ loading: true }, async () => {
+      try {
+        const locationId = await fetchLocationId(city);
+        const { location, weather, temperature } = await fetchWeather(
+          locationId,
+        );
+
+        this.setState({
+          loading: false,
+          error: false,
+          location,
+          weather,
+          temperature,
+        });
+      } catch (error) {
+        this.state({
+          loading: false,
+          error: true,
+        })
+      }
+    });
   }
 
   render() {
@@ -45,8 +71,8 @@ export default class App extends React.Component {
         >
         <View style={styles.innerContainer}> 
           <Text style={[styles.textStyle, styles.largeText]}> {this.state.location} </Text>
-          <Text style={[styles.textStyle, styles.smallText]}>Rain here</Text>
-          <Text style={[styles.textStyle, styles.smallText]}>26 degrees</Text>
+          <Text style={[styles.textStyle, styles.smallText]}> {this.state.weather} </Text>
+          <Text style={[styles.textStyle, styles.smallText]}> {this.state.temperature} degrees</Text>
           <SearchInput 
             placeholder="Search city" 
             onSubmit={this.handleUpdateLocation}
