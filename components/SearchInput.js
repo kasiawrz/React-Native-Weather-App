@@ -33,16 +33,16 @@ export class SearchInput extends React.Component {
     return (
       <View>
         <TextInput
-            placeholder={placeholder}
-            placeholderTextColor="white"
-            value={text}
-            style={styles.textInput}
-            autoCorrect={false}
-            clearButtonMode="always"
-            underlineColorAndroid="transparent"
-            onChangeText={this.handleTextChange}
-            onSubmitEditing={this.handleSumbit}
-          />
+          placeholder={placeholder}
+          placeholderTextColor="white"
+          value={text}
+          style={styles.textInput}
+          autoCorrect={false}
+          clearButtonMode="always"
+          underlineColorAndroid="transparent"
+          onChangeText={this.handleTextChange}
+          onSubmitEditing={this.handleSumbit}
+        />
       </View>
     )}
   }

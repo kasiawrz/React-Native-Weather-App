@@ -57,30 +57,55 @@ export default class App extends React.Component {
   }
 
   render() {
-    // const location = this.state
+    const { error, loading, location, temperature, weather } = this.state;
 
     return (
       <KeyboardAvoidingView 
         style={styles.container}
         behavior="padding"
         >
+        <StatusBar barStyle="light-content"/>
         <ImageBackground
-          source={getImageForWeather('Snow')}
+          source={getImageForWeather(weather)}
           style={styles.imageContainer}
           imageStyle={styles.image}
         >
-        <View style={styles.innerContainer}> 
-          <Text style={[styles.textStyle, styles.largeText]}> {this.state.location} </Text>
-          <Text style={[styles.textStyle, styles.smallText]}> {this.state.weather} </Text>
-          <Text style={[styles.textStyle, styles.smallText]}> {this.state.temperature} degrees</Text>
-          <SearchInput 
-            placeholder="Search city" 
-            onSubmit={this.handleUpdateLocation}
-            />
-         </View>
+
+          <View style={styles.innerContainer}>
+            <ActivityIndicator animating={loading} color="white" size="large" />
+            
+            {!loading && (
+              <View>
+                {error && (
+                  <Text style={[styles.smallText, styles.textStyle]}>
+                    Could not load weather, please try a different city.
+                  </Text>
+                )}
+
+                {!error && (
+                  <View>
+                    <Text style={[styles.largeText, styles.textStyle]}>
+                      {location}
+                    </Text>
+                    <Text style={[styles.smallText, styles.textStyle]}>
+                      {weather}
+                    </Text>
+                    <Text style={[styles.largeText, styles.textStyle]}>
+                      {`${Math.round(temperature)}°`}
+                    </Text>
+                  </View>
+                  )}
+
+                  <SearchInput 
+                    placeholder="Search city" 
+                    onSubmit={this.handleUpdateLocation}
+                  />
+                </View>
+              )}
+            </View>
          </ImageBackground>
       </KeyboardAvoidingView>
-    )
+    );
   }
 }
 
