@@ -17,6 +17,7 @@ import { SearchInput } from './components/SearchInput';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
+    
     this.state = {
       location: 'San Fran',
       loading: false,
@@ -48,7 +49,7 @@ export default class App extends React.Component {
           temperature,
         });
       } catch (error) {
-        this.state({
+        this.setState({
           loading: false,
           error: true,
         })
@@ -77,7 +78,7 @@ export default class App extends React.Component {
             {!loading && (
               <View>
                 {error && (
-                  <Text style={[styles.smallText, styles.textStyle]}>
+                  <Text style={[styles.smallText, styles.textStyle, styles.error]}>
                     Could not load weather, please try a different city.
                   </Text>
                 )}
@@ -112,7 +113,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: 'blue',
   },
   image:{
     flex: 1,
@@ -138,5 +139,9 @@ const styles = StyleSheet.create({
   },
   smallText: {
     fontSize: 18,
+  },
+  error: {
+    fontWeight: '800',
+    fontSize: 24,
   },
 });

@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, TextInput, View } from 'react-native'
+import PropTypes from 'prop-types';
 
 export class SearchInput extends React.Component {
   constructor(props) {
@@ -10,9 +11,7 @@ export class SearchInput extends React.Component {
   }
 
   handleTextChange = text => {
-    // this.props.location = newLocation;
     this.setState({ text });
-    console.log(text)
   }
 
   handleSumbit = () => {
@@ -23,7 +22,7 @@ export class SearchInput extends React.Component {
 
     onSubmit(text);
     this.setState({ text: ' '});
-    console.log('yoł')
+
   }
 
   render () {
@@ -46,6 +45,15 @@ export class SearchInput extends React.Component {
       </View>
     )}
   }
+
+  SearchInput.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    placeholder: PropTypes.string,
+  };
+
+  SearchInput.defaultProps = {
+    placeholder: '',
+  };
 
   const styles = StyleSheet.create({
     container: {
