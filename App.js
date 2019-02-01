@@ -10,7 +10,7 @@ import {
   StatusBar, 
 } from 'react-native';
 
-import { fetchLocationId, fetchWeather } from './utils/api';
+import { fetchWeather } from './utils/api';
 import getImageForWeather from './utils/getImageForWeather';
 import { SearchInput } from './components/SearchInput';
 
@@ -36,9 +36,8 @@ export default class App extends React.Component {
 
     this.setState({ loading: true }, async () => {
       try {
-        const locationId = await fetchLocationId(city);
         const { location, weather, temperature } = await fetchWeather(
-          locationId,
+          city
         );
 
         this.setState({
@@ -48,7 +47,7 @@ export default class App extends React.Component {
           weather,
           temperature,
         });
-      } catch (error) {
+      } catch (e) {
         this.setState({
           loading: false,
           error: true,
