@@ -1,8 +1,6 @@
 export const fetchWeather = async city => {
-  
-  const response = await fetch(
-    `https://www.metaweather.com/api/location/search/?query=${city}`,
-  );
+  const endpointForCityCode = `https://www.metaweather.com/api/location/search/?query=${city}`;
+  const response = await fetch(endpointForCityCode);
   const location = await response.json();
   const locationId = location.length ? location[0].woeid : '';
 

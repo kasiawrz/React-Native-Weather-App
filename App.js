@@ -12,6 +12,7 @@ import {
 
 import { fetchWeather } from './utils/api';
 import getImageForWeather from './utils/getImageForWeather';
+// import getNetworkStatus from '.utils/getNetworkStatus';
 import { SearchInput } from './components/SearchInput';
 
 export default class App extends React.Component {
